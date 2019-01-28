@@ -11,10 +11,16 @@ const NavStyle = styled.div`
     float: left;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 16px;
+    padding: 10px 10px;
     text-decoration: none;
     font-size: 17px;
     margin: auto;
+  }
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 12%;
   }
 `;
 
@@ -22,11 +28,8 @@ export const Navbar = () => {
   return (
     <NavStyle>
       <a href="/">
-        Home
+        <img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Soccerball-red.svg/400px-Soccerball-red.svg.png" />
       </a>
-      <a href="/bet">Bet</a>
-      <a href="/matches">Matches</a>
-      <a href="/ranking">Ranking</a>
     </NavStyle>
   );
 };

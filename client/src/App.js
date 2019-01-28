@@ -7,6 +7,7 @@ import Home from './pages/home';
 import Bet from './pages/bet';
 import Matches from './pages/matches';
 import Ranking from './pages/ranking';
+import User from "./pages/user";
 
 import {Navbar} from "./components/Navbar";
 
@@ -21,6 +22,7 @@ class App extends Component {
           <Route path='/bet' component={Bet}/>
           <Route path='/matches' component={Matches}/>
           <Route path='/ranking' component={Ranking}/>
+          <Route path='/user' component={User}/>
         </Switch>
       </div>
     );

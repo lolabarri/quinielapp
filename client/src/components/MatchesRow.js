@@ -5,10 +5,6 @@ const RowStyle = styled.tr`
 :hover {background-color: #f5f5f5;};
 `
 
-const InputStyle = styled.input`
-text-align: center;
-`
-
 const MatchesRow = props => {
   return (
     <RowStyle>
