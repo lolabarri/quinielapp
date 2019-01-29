@@ -8,8 +8,10 @@ import Bet from './pages/bet';
 import Matches from './pages/matches';
 import Ranking from './pages/ranking';
 import User from "./pages/user";
+import { Signup } from "./pages/signup";
+import { Login } from "./pages/login";
 
-import {Navbar} from "./components/Navbar";
+import { Navbar } from "./components/Navbar";
 
 class App extends Component {
   render() {
@@ -23,6 +25,8 @@ class App extends Component {
           <Route path='/matches' component={Matches}/>
           <Route path='/ranking' component={Ranking}/>
           <Route path='/user' component={User}/>
+          <Route path='/signup' component={Signup}/>
+          <Route path='/login' component={Login}/>
         </Switch>
       </div>
     );

@@ -9,6 +9,7 @@ border: 1px solid tomato;
 border-radius: 5px;
 padding: 1vh;
 float: left;
+font-size: 1em;
 a {
   text-decoration: none;
 }
