@@ -20,7 +20,7 @@ img {
 }
 `
 
-const Card = (props) => {
+const Card = props => {
   return (
     <CardStyle>
         <img alt="" src="https://perkovec.gallerycdn.vsassets.io/extensions/perkovec/emoji/0.0.3/1474455600876/Microsoft.VisualStudio.Services.Icons.Default" />
@@ -29,6 +29,6 @@ const Card = (props) => {
         <p>Ranking position: {props.rankingPosition}</p>
     </CardStyle>
   )
-}
+};
 
 export default Card;

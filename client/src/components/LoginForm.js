@@ -38,24 +38,26 @@ class _LoginForm extends Component {
             dispatch(login(user))
             history.push('/');
         })
-        .catch( e => {
+        .catch( () => {
             dispatch(errorMessageAction("Invalid login credentials"));
         });
     }
 
     render() {
-        const {email, password} = this.state;
+        const { email, password } = this.state;
         return (
             <DivStyle>
                 <h2>Login</h2>
                 <label>Email:  </label>
-                <input value={email} type="email" onChange={e => this.setState({email:e.target.value})}/>
+                <input value={ email } type="email" onChange={e => this.setState({email:e.target.value})}/>
                 <br />
                 <label>Password:  </label>
-                <input value={password} type="password" onChange={e => this.setState({password:e.target.value})}/>
+                <input value={ password } type="password" onChange={e => this.setState({password:e.target.value})}/>
                 <br />
                 <br />
                 <button onClick={() => this.handleLogin()}>Login</button>
+                <br />
+                <p>Still not a user? You can register for free <a href="/signup">here</a></p>
             </DivStyle>
         );
     }

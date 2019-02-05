@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
-const userSchema = new Schema({
+const resultsFirstSchema = new Schema({
   name: String,
   email: String,
   password: String
@@ -12,5 +12,5 @@ const userSchema = new Schema({
   }
 });
 
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+const ResultsFirst = mongoose.model('ResultsFirst', resultsFirstSchema);
+module.exports = ResultsFirst;

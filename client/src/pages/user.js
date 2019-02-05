@@ -3,12 +3,20 @@ import UserCard from "../components/UserCard";
 import { AuthAPI } from '../lib/auth';
 import { logout } from '../lib/redux/actions';
 import { connect } from 'react-redux';
+import styled from "@emotion/styled";
 
-const User = connect(state => ({user: state.user}))(({user, dispatch}) => {
+const ButtonStyle = styled.button`
+  background-color: tomato;
+  color: white;
+  border-radius: 5px;
+`
+
+const User = connect(state => ({user: state.user}))(({user,dispatch, history}) => {
   return (
       <div>
         <UserCard name="Coqueto Poliqueto" rankingPosition="1"/>
-        <button onClick={() => AuthAPI.logout().then(() => dispatch(logout()))}>Logout</button>
+        <ButtonStyle onClick={() => AuthAPI.logout().then(() => {dispatch(logout())
+          history.push("/")})}>Logout</ButtonStyle>
       </div>
   );
 });

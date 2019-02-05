@@ -98,4 +98,7 @@ app.use("/", index);
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
+const betRoutes = require("./routes/bet");
+app.use("/bet", betRoutes);
+
 module.exports = app;

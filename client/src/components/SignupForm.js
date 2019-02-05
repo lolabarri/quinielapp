@@ -60,6 +60,7 @@ class _SignupForm extends Component {
                 <br />
                 <br />
                 <button onClick={() => this.handleLogin()}>Signup</button>
+                <p>Already a member? Login <a href="/login">here!</a></p>
             </DivStyle>
         );
     }

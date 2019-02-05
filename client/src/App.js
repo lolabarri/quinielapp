@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
 import Home from './pages/home';
-import Bet from './pages/bet';
+import {Bet} from './pages/bet';
 import Matches from './pages/matches';
 import Ranking from './pages/ranking';
 import User from "./pages/user";
