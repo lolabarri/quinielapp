@@ -101,4 +101,7 @@ app.use("/auth", authRoutes);
 const betRoutes = require("./routes/bet");
 app.use("/bet", betRoutes);
 
+const apiRoutes = require("./routes/footballAPI");
+app.use("/footballAPI", apiRoutes);
+
 module.exports = app;

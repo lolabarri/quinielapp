@@ -5,13 +5,14 @@ const RowStyle = styled.tr`
 :hover {background-color: #f5f5f5;};
 `
 
-const MatchesRow = props => {
+const MatchesRow = ({matches}) => {
   return (
     <RowStyle>
-      <td>{props.date}</td>
-      <td>{props.localTeam}</td>
-      <td>{props.visitorTeam}</td>
-      <td>{props.score}</td>
+      <td>{matches.utcDate}</td>
+      <td>{matches.homeTeam.name}</td>
+      <td>{matches.score.fullTime.homeTeam}</td>
+      <td>{matches.awayTeam.name}</td>
+      <td>{matches.score.fullTime.awayTeam}</td>
     </RowStyle>
   );
 };

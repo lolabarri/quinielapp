@@ -1,6 +1,7 @@
-import React from "react";
+import React, {Component} from "react";
 import MatchesRow from "../components/MatchesRow";
 import styled from "@emotion/styled";
+import { getMatchesResults } from "../lib/footballAPI";
 
 const TableStyle = styled.table`
 border-collapse: collapse;
@@ -15,25 +16,44 @@ th {
 }
 `
 
-const matches = () => {
+class matches extends Component {
+  constructor() {
+    super();
+    this.state= {
+      data: null
+    }
+  };
+
+  componentDidMount() {
+    getMatchesResults(22).then(data => {
+      this.setState(data);
+    });
+  }
+
+  render() {
   return (
+    <div>
       <TableStyle>
         <thead>
           <tr>
             <th>DATE</th>
             <th>LT</th>
+            <th>G</th>
             <th>VT</th>
-            <th>SC</th>
+            <th>G</th>
           </tr>
         </thead>
         <tbody>
-       <MatchesRow date="12/02/2019 12.00" localTeam="Levante" visitorTeam="Getafe" score="1-0" />
-       <MatchesRow date="12/02/2019 12.00" localTeam="Levante" visitorTeam="Getafe" score="1-0" />
-       <MatchesRow date="12/02/2019 12.00" localTeam="Levante" visitorTeam="Getafe" score="1-0" />
-       <MatchesRow date="12/02/2019 12.00" localTeam="Levante" visitorTeam="Getafe" score="1-0" />
+          {this.state.data ? (
+            this.state.data.map(matches => <MatchesRow key={matches.id} matches={matches} />)
+          ) : (
+            <tr><td>...</td></tr>
+          )}
         </tbody>
       </TableStyle>
+      </div>
   );
+  };
 };
 
 export default matches;
