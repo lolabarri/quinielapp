@@ -25,7 +25,7 @@ class matches extends Component {
   };
 
   componentDidMount() {
-    getMatchesResults(22).then(data => {
+    getMatchesResults(23).then(data => {
       this.setState(data);
     });
   }

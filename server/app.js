@@ -104,4 +104,7 @@ app.use("/bet", betRoutes);
 const apiRoutes = require("./routes/footballAPI");
 app.use("/footballAPI", apiRoutes);
 
+const quinielaRoutes = require("./routes/quinielaScrape");
+app.use("/quinielaScrape", quinielaRoutes);
+
 module.exports = app;
