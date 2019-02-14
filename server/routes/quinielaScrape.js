@@ -28,7 +28,7 @@ router.get("/quiniela", (req, res) => {
           result.finalResult = resultsList[i].result;
           results.push({ ...result });
         });
-        res.json(results);
+        res.json({results:results});
       }
     },
     err => console.log(err)
@@ -48,7 +48,7 @@ router.get("/apuesta", (req, res) => {
           };
         });
 
-        res.json(matchesList);
+        res.json({matches:matchesList});
       }
     },
     err => console.log(err)

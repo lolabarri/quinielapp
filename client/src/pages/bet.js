@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { errorMessageAction } from '../lib/redux/actions';
 import styled from "@emotion/styled";
+import { getQuinielaBet } from "../lib/quinielaScrape";
 
 const TableStyle = styled.table`
 border-collapse: collapse;
@@ -39,8 +40,16 @@ class _Bet extends Component {
       bet13: "",
       bet14: "",
       bet15: "",
+      data: null
     }
 };
+
+componentWillMount() {
+  getQuinielaBet().then(data => {
+    this.setState(data);
+    console.log(data);
+  });
+}
 
 handleBetting(){
     const {bet1, bet2, bet3, bet4, bet5, bet6, bet7, bet8, bet9, bet10, bet11, bet12, bet13, bet14, bet15} = this.state;
@@ -53,6 +62,8 @@ handleBetting(){
         dispatch(errorMessageAction("Invalid login credentials"));
     });
   };
+
+
 
   render() {
   return (
@@ -70,7 +81,7 @@ handleBetting(){
         </thead>
         <tbody>
         <BetRow onChange={e => this.setState({bet1:e.target.value})} number="1" localTeam="Levante" visitorTeam="Getafe" name="bet1" />
-        <BetRow onChange={e => this.setState({bet2:e.target.value})} number="2" localTeam="Real Sociedad" visitorTeam="Athletic Club" name="bet2" />
+        <BetRow onChange={e => this.setState({bet2:e.target.value})} number="2" localTeam= "Real Sociedad" visitorTeam="Athletic Club" name="bet2" />
         <BetRow onChange={e => this.setState({bet3:e.target.value})} number="3" localTeam="Barcelona" visitorTeam="Valencia" name="bet3" />
         <BetRow onChange={e => this.setState({bet4:e.target.value})} number="4" localTeam="Eibar" visitorTeam="Girona"  name="bet4"/>
         <BetRow onChange={e => this.setState({bet5:e.target.value})} number="5" localTeam="Villarreal" visitorTeam="Espanyol" name="bet5" />

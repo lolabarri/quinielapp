@@ -17,7 +17,7 @@ const BetRow = props => {
       <td>{props.visitorTeam}</td>
       <td><InputStyle onChange={props.onChange} type="radio" name={props.name} value="Home Team"/></td>
       <td><InputStyle onChange={props.onChange} type="radio" name={props.name} value="Draw"/></td>
-      <td><InputStyle onChange={props.onChange} type="radio" name={props.name} value=" Away Team"/></td>
+      <td><InputStyle onChange={props.onChange} type="radio" name={props.name} value="Away Team"/></td>
     </RowStyle>
   );
 };
