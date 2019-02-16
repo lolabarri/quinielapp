@@ -15,8 +15,8 @@ export class BetAPI {
         throw e;
     }
 
-    static bet(bet1, bet2, bet3, bet4, bet5, bet6, bet7, bet8, bet9, bet10, bet11, bet12, bet13, bet14, bet15){
-        return instance.post('/bet/new',{bet1, bet2, bet3, bet4, bet5, bet6, bet7, bet8, bet9, bet10, bet11, bet12, bet13, bet14, bet15})
+    static bet(apuestas){
+        return instance.post('/bet/new',{apuestas})
         .then((res) => res.data.bet)
         .catch(BetAPI.errorHandler)
     }
