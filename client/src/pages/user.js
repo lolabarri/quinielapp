@@ -1,5 +1,5 @@
 import React from "react";
-import UserCard from "../components/UserCard";
+import {UserCard} from "../components/UserCard";
 import { AuthAPI } from '../lib/auth';
 import { logout } from '../lib/redux/actions';
 import { connect } from 'react-redux';
@@ -14,7 +14,7 @@ const ButtonStyle = styled.button`
 const User = connect(state => ({user: state.user}))(({user,dispatch, history}) => {
   return (
       <div>
-        <UserCard name="Coqueto Poliqueto" rankingPosition="1"/>
+        <UserCard name={user.name} points="176"/>
         <ButtonStyle onClick={() => AuthAPI.logout().then(() => {dispatch(logout())
           history.push("/")})}>Logout</ButtonStyle>
       </div>

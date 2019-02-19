@@ -38,15 +38,22 @@ class _Bet extends Component {
   handleBetting() {
     const { history, dispatch } = this.props;
     BetAPI.bet(this.state.allTheBets)
-      .then(history.push("/"))
+      .then(() => history.push("/"))
       .catch(() => {
         dispatch(errorMessageAction("Bet was not done"));
       });
   }
 
   handleChange(value, index) {
-    let apuestas = this.state.allTheBets;
-    apuestas.splice(index, 0, value);
+    let apuestas = this.state.allTheBets.filter(e => e.index !== index);
+    let obj = {
+      index,
+      value
+    };
+    apuestas.push(obj);
+    this.setState({ allTheBets: apuestas }, () =>
+      console.log(this.state.allTheBets)
+    );
   }
 
   render() {

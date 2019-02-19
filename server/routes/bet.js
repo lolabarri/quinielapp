@@ -3,13 +3,15 @@ const router = express.Router();
 const Bet = require("../models/Bet");
 
 router.post("/new", (req, res, next) => {
+  const apuestas = req.body.apuestas.sort((a,b) => a.index - b.index).map(e => e.value);
   const newBet = new Bet({
     user: req.user,
-    apuestas: req.body.apuestas
+    apuestas: apuestas
   });
 
   newBet.save()
     .then(bet => {
+      console.log(apuestas);
       res.json({bet})
     })
     .catch(err => {

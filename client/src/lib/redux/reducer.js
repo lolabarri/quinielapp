@@ -1,9 +1,16 @@
 const initialStore = {
-  user: null,
+  user: {},
+  matchday: 1
 };
 
 export const rootReducer = (store = initialStore, action) => {
   switch (action.type) {
+    case "INCREMENT_MATCHDAY":
+            store = {
+                ...store,
+                matchday: store.matchday+1
+            }
+        break;
     case "LOGIN":
       store = {
         ...store,

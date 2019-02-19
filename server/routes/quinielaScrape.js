@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const cheerio = require("cheerio");
+const Matchday = require("../models/Matchday");
 
 router.get("/quiniela", (req, res) => {
   axios.get("https://www.loteriasyapuestas.es/es/la-quiniela").then(
@@ -29,6 +30,33 @@ router.get("/quiniela", (req, res) => {
           results.push({ ...result });
         });
         res.json({ results: results });
+      }
+    },
+    err => console.log(err)
+  );
+});
+
+router.post("/results", (req, res, next) => {
+  axios.get("https://www.loteriasyapuestas.es/es/la-quiniela").then(
+    response => {
+      if (response.status === 200) {
+        const html = response.data;
+        const $ = cheerio.load(html);
+        let resultsList = [];
+        $("ul.fondoGrisClaro li").each(function(i, element) {
+          resultsList.push($(this).text())
+        });
+        const newMatchday = new Matchday({
+          resultados: resultsList
+        });
+      
+        newMatchday.save()
+          .then(matchday => {
+            res.json({matchday})
+          })
+          .catch(err => {
+            res.json({ message: "Something went wrong" })
+          })
       }
     },
     err => console.log(err)

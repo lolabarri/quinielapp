@@ -5,11 +5,12 @@ const betSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
     matchday: { type: Schema.Types.ObjectId, ref: "Matchday" },
-    apuestas: [{
-      type: String,
-      required: true
-    }],
-    
+    apuestas: [
+      {
+        type: String,
+        required: true
+      }
+    ]
   },
   {
     timestamps: {

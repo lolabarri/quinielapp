@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "@emotion/styled";
+import { connect } from 'react-redux';
 
 const CardStyle = styled.div`
 width: 80%;
@@ -16,19 +17,19 @@ a:visited {
 }
 img {
   padding: 1vh;
-  width: 80%;
+  width: 50%;
 }
 `
-
-const Card = props => {
+const Card = (props) => {
   return (
     <CardStyle>
         <img alt="" src="https://perkovec.gallerycdn.vsassets.io/extensions/perkovec/emoji/0.0.3/1474455600876/Microsoft.VisualStudio.Services.Icons.Default" />
         <br />
         <h3>{props.name}</h3>
-        <p>Ranking position: {props.rankingPosition}</p>
+        <p>Points: {props.points}</p>
+      
     </CardStyle>
-  )
+  );
 };
 
-export default Card;
+export const UserCard = connect(state => state)(Card);

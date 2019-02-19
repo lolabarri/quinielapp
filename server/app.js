@@ -107,4 +107,7 @@ app.use("/footballAPI", apiRoutes);
 const quinielaRoutes = require("./routes/quinielaScrape");
 app.use("/quinielaScrape", quinielaRoutes);
 
+const pointsRoutes = require("./routes/pointsLogic");
+app.use("/points", pointsRoutes);
+
 module.exports = app;

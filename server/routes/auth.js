@@ -28,13 +28,13 @@ router.post("/signup", (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   if (name === "" || email === "" || password === "") {
-    res.json( { message: "Indicate name, email and password" })
+    res.json({ message: "Indicate name, email and password" });
     return;
   }
 
   User.findOne({ email }, "email", (err, user) => {
     if (user !== null) {
-      res.json( { message: "The email already exists" })
+      res.json({ message: "The email already exists" });
       return;
     }
 
@@ -44,33 +44,35 @@ router.post("/signup", (req, res, next) => {
     const newUser = new User({
       name,
       email,
-      password: hashPass
+      password: hashPass,
+      points: 0,
+      cup: false
     });
 
-    newUser.save()
-    .then(user => loginPromise(req,user))
-    .then(user => {
-      res.json({user})
-    })
-    .catch(err => {
-      res.json({ message: "Something went wrong" })
-    })
+    newUser
+      .save()
+      .then(user => loginPromise(req, user))
+      .then(user => {
+        res.json({ user });
+      })
+      .catch(err => {
+        res.json({ message: "Something went wrong" });
+      });
   });
 });
 
 router.get("/currentuser", (req, res) => {
-  const {user} = req;
-  if(user){
-    res.json({succes: "OK", user})
-  }else{
-    res.status(401).json({succes: "NO USER LOGGED IN"})
+  const { user } = req;
+  if (user) {
+    res.json({ succes: "OK", user });
+  } else {
+    res.status(401).json({ succes: "NO USER LOGGED IN" });
   }
 });
 
-
 router.get("/logout", (req, res) => {
   req.logout();
-  res.json({succes: "OK"})
+  res.json({ succes: "OK" });
 });
 
 module.exports = router;
