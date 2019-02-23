@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const Bet = require("../models/Bet");
-const Results = require("../models/Results");
+const Matchday = require("../models/Matchday");
 
 // Results.findOne({matchday})
 

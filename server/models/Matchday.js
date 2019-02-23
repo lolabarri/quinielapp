@@ -3,6 +3,13 @@ const Schema = mongoose.Schema;
 
 const MatchdaySchema = new Schema(
   {
+    matchday: Number,
+    matches: [
+      {
+        type: String,
+        required: true
+      }
+    ],
     resultados: [
       {
         type: String,

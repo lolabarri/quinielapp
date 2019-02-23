@@ -20,6 +20,12 @@ const TableStyle = styled.table`
   }
 `;
 
+const ButtonStyle = styled.button`
+  background-color: tomato;
+  color: white;
+  border-radius: 5px;
+`;
+
 class _Bet extends Component {
   constructor() {
     super();
@@ -86,7 +92,7 @@ class _Bet extends Component {
           </tbody>
         </TableStyle>
         <br />
-        <button onClick={() => this.handleBetting()}>Submit</button>
+        <ButtonStyle onClick={() => this.handleBetting()}>Submit</ButtonStyle>
       </React.Fragment>
     );
   }

@@ -46,7 +46,8 @@ router.post("/signup", (req, res, next) => {
       email,
       password: hashPass,
       points: 0,
-      cup: false
+      cup: false,
+      nextDay: true
     });
 
     newUser

@@ -36,27 +36,35 @@ router.get("/quiniela", (req, res) => {
   );
 });
 
-router.post("/results", (req, res, next) => {
+router.post("/results/:matchday", (req, res, next) => {
   axios.get("https://www.loteriasyapuestas.es/es/la-quiniela").then(
     response => {
       if (response.status === 200) {
         const html = response.data;
         const $ = cheerio.load(html);
+        let matchesList = [];
         let resultsList = [];
+        $("ul.puntosSusp li").each(function(i, element) {
+          matchesList.push($(this).text());
+        });
         $("ul.fondoGrisClaro li").each(function(i, element) {
-          resultsList.push($(this).text())
+          resultsList.push($(this).text());
         });
-        const newMatchday = new Matchday({
-          resultados: resultsList
+        Matchday.findOne({matchday: req.params.matchday}, (error, matchday) => {
+          if (error) {
+            next(error);
+          } else {
+            matchday.resultados = resultsList;
+            matchday.matches = matchesList;
+            matchday.save((error, finalResults) => {
+              if (error) {
+                next(error);
+              } else {
+                res.json({ finalResults });
+              }
+            });
+          }
         });
-      
-        newMatchday.save()
-          .then(matchday => {
-            res.json({matchday})
-          })
-          .catch(err => {
-            res.json({ message: "Something went wrong" })
-          })
       }
     },
     err => console.log(err)
@@ -128,3 +136,15 @@ router.get("/apuesta", (req, res) => {
 });
 
 module.exports = router;
+
+// const newMatchday = new Matchday({
+//   resultados: resultsList
+// });
+
+// newMatchday.save()
+//   .then(matchday => {
+//     res.json({matchday})
+//   })
+//   .catch(err => {
+//     res.json({ message: "Something went wrong" })
+//   })

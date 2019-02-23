@@ -14,9 +14,9 @@ const ButtonStyle = styled.button`
 const User = connect(state => ({user: state.user}))(({user,dispatch, history}) => {
   return (
       <div>
-        <UserCard name={user.name} points="176"/>
-        <ButtonStyle onClick={() => AuthAPI.logout().then(() => {dispatch(logout())
-          history.push("/")})}>Logout</ButtonStyle>
+        <UserCard name={user.name} points={user.points}/>
+        <ButtonStyle onClick={() => AuthAPI.logout().then(() =>
+          history.push("/")).then(() => {dispatch(logout())})}>Logout</ButtonStyle>
       </div>
   );
 });
