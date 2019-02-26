@@ -2,18 +2,16 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const RowStyle = styled.tr`
-:hover {background-color: #f5f5f5;};
-`
+  :hover {
+    background-color: #f5f5f5;
+  }
+`;
 
-const RankingRow = props => {
+const RankingRow = ({ users }) => {
   return (
     <RowStyle>
-      <td>{props.position}</td>
-      <td>{props.name}</td>
-      <td>{props.points}</td>
-      <td>{props.cups}</td>
-      <td>{props.tablePoints}</td>
-      <td>{props.totalPoints}</td>
+      <td>{users.name}</td>
+      <td>{users.points}</td>
     </RowStyle>
   );
 };

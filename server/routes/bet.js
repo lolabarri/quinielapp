@@ -11,7 +11,6 @@ router.post("/new", (req, res, next) => {
 
   newBet.save()
     .then(bet => {
-      console.log(apuestas);
       res.json({bet})
     })
     .catch(err => {

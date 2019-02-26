@@ -76,4 +76,14 @@ router.get("/logout", (req, res) => {
   res.json({ succes: "OK" });
 });
 
+router.get("/allUsers", (req, res) => {
+  User.find({}, null, {sort: '-points'}, (err, users) => {
+    if (err) {
+      console.log("error query");
+    } else {
+      res.json({users: users});
+    }
+  })
+});
+
 module.exports = router;

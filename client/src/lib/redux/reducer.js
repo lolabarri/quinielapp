@@ -1,16 +1,22 @@
 const initialStore = {
   user: {},
-  matchday: 1
+  matchday: {}
 };
 
 export const rootReducer = (store = initialStore, action) => {
   switch (action.type) {
-    case "INCREMENT_MATCHDAY":
-            store = {
-                ...store,
-                matchday: store.matchday+1
-            }
-        break;
+    // case "INCREMENT_MATCHDAY":
+    //   store = {
+    //     ...store,
+    //     matchday: store.matchday + 1
+    //   };
+    //   break;
+    case "MATCHDAY":
+      store = {
+        ...store,
+        matchday: action.matchday
+      };
+      break;
     case "LOGIN":
       store = {
         ...store,
@@ -26,7 +32,5 @@ export const rootReducer = (store = initialStore, action) => {
     default:
       return store;
   }
-  // For now, don't handle any actions
-  // and just return the store given to us.
   return store;
 };

@@ -4,6 +4,54 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const Matchday = require("../models/Matchday");
 
+router.get("/matchday/:matchday", (req, res, next) => {
+  Matchday.findOne({ matchday: req.params.matchday }, "matchday -_id", (error, matchday) => {
+    if (error) {
+      next(error);
+    } else {
+      res.json(matchday);
+    }
+  });
+});
+
+router.post("/results/:matchday", (req, res, next) => {
+  axios.get("https://www.loteriasyapuestas.es/es/la-quiniela").then(
+    response => {
+      if (response.status === 200) {
+        const html = response.data;
+        const $ = cheerio.load(html);
+        let matchesList = [];
+        let resultsList = [];
+        $("ul.puntosSusp li").each(function(i, element) {
+          matchesList.push($(this).text());
+        });
+        $("ul.fondoGrisClaro li").each(function(i, element) {
+          resultsList.push($(this).text());
+        });
+        Matchday.findOne(
+          { matchday: req.params.matchday },
+          (error, matchday) => {
+            if (error) {
+              next(error);
+            } else {
+              matchday.resultados = resultsList;
+              matchday.matches = matchesList;
+              matchday.save((error, finalResults) => {
+                if (error) {
+                  next(error);
+                } else {
+                  res.json({ finalResults });
+                }
+              });
+            }
+          }
+        );
+      }
+    },
+    err => console.log(err)
+  );
+});
+
 router.get("/quiniela", (req, res) => {
   axios.get("https://www.loteriasyapuestas.es/es/la-quiniela").then(
     response => {
@@ -30,41 +78,6 @@ router.get("/quiniela", (req, res) => {
           results.push({ ...result });
         });
         res.json({ results: results });
-      }
-    },
-    err => console.log(err)
-  );
-});
-
-router.post("/results/:matchday", (req, res, next) => {
-  axios.get("https://www.loteriasyapuestas.es/es/la-quiniela").then(
-    response => {
-      if (response.status === 200) {
-        const html = response.data;
-        const $ = cheerio.load(html);
-        let matchesList = [];
-        let resultsList = [];
-        $("ul.puntosSusp li").each(function(i, element) {
-          matchesList.push($(this).text());
-        });
-        $("ul.fondoGrisClaro li").each(function(i, element) {
-          resultsList.push($(this).text());
-        });
-        Matchday.findOne({matchday: req.params.matchday}, (error, matchday) => {
-          if (error) {
-            next(error);
-          } else {
-            matchday.resultados = resultsList;
-            matchday.matches = matchesList;
-            matchday.save((error, finalResults) => {
-              if (error) {
-                next(error);
-              } else {
-                res.json({ finalResults });
-              }
-            });
-          }
-        });
       }
     },
     err => console.log(err)
@@ -136,15 +149,3 @@ router.get("/apuesta", (req, res) => {
 });
 
 module.exports = router;
-
-// const newMatchday = new Matchday({
-//   resultados: resultsList
-// });
-
-// newMatchday.save()
-//   .then(matchday => {
-//     res.json({matchday})
-//   })
-//   .catch(err => {
-//     res.json({ message: "Something went wrong" })
-//   })

@@ -57,8 +57,7 @@ class _Bet extends Component {
       value
     };
     apuestas.push(obj);
-    this.setState({ allTheBets: apuestas }, () =>
-      console.log(this.state.allTheBets)
+    this.setState({ allTheBets: apuestas }
     );
   }
 
