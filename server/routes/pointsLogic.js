@@ -4,7 +4,7 @@ const User = require("../models/User");
 const Bet = require("../models/Bet");
 const Results = require("../models/Results");
 
-router.get("/matchday", (next) => {
+router.get("/matchday", next => {
   Results.findOne({}, {}, { sort: { updated_at: -1 } }, (error, results) => {
     if (error) {
       next(error);
@@ -39,53 +39,17 @@ router.get("/matchday", (next) => {
           usersArr.forEach(e => {
             User.findById(e, (error, user) => {
               let j = usersArr.indexOf(e);
-                  let currentPoints = user.points;
-                  let newPoints = pointsArr[j];
-                  let totalPoints = currentPoints + newPoints;
+              let currentPoints = user.points;
+              let newPoints = pointsArr[j];
+              let totalPoints = currentPoints + newPoints;
               if (error) {
                 next(error);
-              } else { 
+              } else {
                 user.points = totalPoints;
-                  user.save();
+                user.save();
               }
             });
           });
-        }
-      });
-    }
-  });
-});
-
-//Actualiza el número de puntos de un user en función de su user ID
-router.post("/updatePoints/:user_id", (req, res, next) => {
-  User.findById(req.params.user_id, (error, user) => {
-    if (error) {
-      next(error);
-    } else {
-      user.points = 15;
-      user.save((error, points) => {
-        if (error) {
-          next(error);
-        } else {
-          res.json({ points });
-        }
-      });
-    }
-  });
-});
-
-// Actualiza el número de puntos del user actual
-router.post("/updatePoints", (req, res, next) => {
-  User.findOne({ user: req.user }, (error, user) => {
-    if (error) {
-      next(error);
-    } else {
-      req.user.points = 15;
-      req.user.save((error, points) => {
-        if (error) {
-          next(error);
-        } else {
-          res.json({ points });
         }
       });
     }

@@ -3,6 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 const cheerio = require("cheerio");
 const Bet = require("../models/Bet");
+const Results = require("../models/Results");
 
 router.post("/new", (req, res, next) => {
   axios
@@ -16,24 +17,37 @@ router.post("/new", (req, res, next) => {
           matchesList.push($(this).text());
         });
 
-        const apuestas = req.body.apuestas
-          .sort((a, b) => a.index - b.index)
-          .map(e => e.value);
-        const newBet = new Bet({
-          user: req.user,
-          apuestas: apuestas,
-          partidos: matchesList,
-          matchday: 25
-        });
+        Results.findOne(
+          {},
+          {},
+          { sort: { updated_at: -1 } },
+          (error, results) => {
+            if (error) {
+              next(error);
+            } else {
+              let matchday = results.matchday;
+              let thisMatchday = matchday + 1;
+              const apuestas = req.body.apuestas
+                .sort((a, b) => a.index - b.index)
+                .map(e => e.value);
+              const newBet = new Bet({
+                user: req.user,
+                apuestas: apuestas,
+                partidos: matchesList,
+                matchday: thisMatchday
+              });
 
-        newBet
-          .save()
-          .then(bet => {
-            res.json({ bet });
-          })
-          .catch(err => {
-            res.json({ message: "Something went wrong" });
-          });
+              newBet
+                .save()
+                .then(bet => {
+                  res.json({ bet });
+                })
+                .catch(err => {
+                  res.json({ message: "Something went wrong" });
+                });
+            }
+          }
+        );
       }
     });
 });
