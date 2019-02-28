@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const cheerio = require("cheerio");
-const Matchday = require("../models/Matchday");
+const Results = require("../models/Results");
 
+// Devuelve
 router.get("/matchday/:matchday", (req, res, next) => {
-  Matchday.findOne({ matchday: req.params.matchday }, "matchday -_id", (error, matchday) => {
+  Results.findOne({ matchday: req.params.matchday }, "matchday -_id", (error, matchday) => {
     if (error) {
       next(error);
     } else {
@@ -14,6 +15,7 @@ router.get("/matchday/:matchday", (req, res, next) => {
   });
 });
 
+// Guarda los resultados definitivos de una jornada
 router.post("/results/:matchday", (req, res, next) => {
   axios.get("https://www.loteriasyapuestas.es/es/la-quiniela").then(
     response => {
@@ -28,15 +30,15 @@ router.post("/results/:matchday", (req, res, next) => {
         $("ul.fondoGrisClaro li").each(function(i, element) {
           resultsList.push($(this).text());
         });
-        Matchday.findOne(
+        Results.findOne(
           { matchday: req.params.matchday },
-          (error, matchday) => {
+          (error, results) => {
             if (error) {
               next(error);
             } else {
-              matchday.resultados = resultsList;
-              matchday.matches = matchesList;
-              matchday.save((error, finalResults) => {
+              results.resultados = resultsList;
+              results.matches = matchesList;
+              results.save((error, finalResults) => {
                 if (error) {
                   next(error);
                 } else {

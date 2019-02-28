@@ -4,13 +4,20 @@ const Schema = mongoose.Schema;
 const betSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
-    matchday: { type: Schema.Types.ObjectId, ref: "Matchday" },
+    matchday: Number,
     apuestas: [
       {
         type: String,
         required: true
       }
-    ]
+    ],
+    partidos: [
+      {
+        type: String,
+        required: true
+      }
+    ],
+    isChecked: Boolean
   },
   {
     timestamps: {

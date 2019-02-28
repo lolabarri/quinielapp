@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const MatchdaySchema = new Schema(
+const ResultsSchema = new Schema(
   {
     matchday: Number,
     matches: [
@@ -26,5 +26,5 @@ const MatchdaySchema = new Schema(
 );
 
 
-const Matchday = mongoose.model('Matchday', MatchdaySchema);
-module.exports = Matchday;
+const Results = mongoose.model('Results', ResultsSchema);
+module.exports = Results;
