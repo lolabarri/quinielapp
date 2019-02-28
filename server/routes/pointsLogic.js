@@ -4,20 +4,7 @@ const User = require("../models/User");
 const Bet = require("../models/Bet");
 const Results = require("../models/Results");
 
-// Obtiene el último array de resultados de Results
-// router.get("/matchday", (req, res, next) => {
-//   Results.findOne({}, {}, { sort: { updated_at: -1 } }, (error, results) => {
-//     if (error) {
-//       next(error);
-//     } else {
-//       let realResults = results.resultados;
-//       let resultsId = results._id;
-//       console.log(resultsId);
-//     }
-//   });
-// });
-
-router.get("/matchday", (req, res, next) => {
+router.get("/matchday", (next) => {
   Results.findOne({}, {}, { sort: { updated_at: -1 } }, (error, results) => {
     if (error) {
       next(error);
@@ -33,7 +20,6 @@ router.get("/matchday", (req, res, next) => {
           bets.forEach(({ user }) => {
             usersArr.push(user);
           });
-          console.log(usersArr);
           let apuestasArr = [];
           bets.forEach(({ apuestas }) => {
             let apuestasEnt = apuestas.slice(1, -1);
@@ -50,41 +36,24 @@ router.get("/matchday", (req, res, next) => {
             }
             pointsArr.push(correctResults);
           });
-          console.log(pointsArr);
+          usersArr.forEach(e => {
+            User.findById(e, (error, user) => {
+              let j = usersArr.indexOf(e);
+                  let currentPoints = user.points;
+                  let newPoints = pointsArr[j];
+                  let totalPoints = currentPoints + newPoints;
+              if (error) {
+                next(error);
+              } else { 
+                user.points = totalPoints;
+                  user.save();
+              }
+            });
+          });
         }
       });
     }
   });
-});
-
-// Obtiene un JSON con las apuestas de cada user, con ID de user y array de apuestas
-router.get("/bet/:matchday", (req, res, next) => {
-  Bet.find(
-    { matchday: req.params.matchday },
-    "apuestas user -_id",
-    (error, bets) => {
-      if (error) {
-        next(error);
-      } else {
-        res.json(bets);
-      }
-    }
-  );
-});
-
-// Obtiene el array de apuestas del usuario que esta logueado, para un matchday concreto
-router.get("/betOne/:matchday", (req, res, next) => {
-  Bet.find(
-    { matchday: req.params.matchday, user: req.user._id },
-    "apuestas user -_id",
-    (error, bets) => {
-      if (error) {
-        next(error);
-      } else {
-        res.json(bets);
-      }
-    }
-  );
 });
 
 //Actualiza el número de puntos de un user en función de su user ID
@@ -122,20 +91,5 @@ router.post("/updatePoints", (req, res, next) => {
     }
   });
 });
-
-// router.get("/betOneTwo/matchday", (req, res, next) => {
-//   Matchday.find({ matchday: req.params.matchday})
-//   Bet.find(
-//     { matchday: req.params.matchday_id, user: req.user },
-//     "apuestas user -_id",
-//     (error, bets) => {
-//       if (error) {
-//         next(error);
-//       } else {
-//         res.json(bets);
-//       }
-//     }
-//   );
-// });
 
 module.exports = router;
