@@ -1,15 +1,7 @@
 import React from "react";
 import Card from "../components/Card";
-import styled from "@emotion/styled";
 import { connect } from "react-redux";
 import { LoginForm } from "../components/LoginForm";
-
-const FooterStyle = styled.footer`
-  clear: both;
-  position: relative;
-  height: 40px;
-  margin-top: -40px;
-`;
 
 const home = connect(state => ({ user: state.user }))(({ user }) => {
   return (
@@ -41,9 +33,6 @@ const home = connect(state => ({ user: state.user }))(({ user }) => {
             description="All important data about you (safely saved)"
           />
           <br />
-          <FooterStyle>
-            Football data provided by the Football-Data.org API
-          </FooterStyle>
         </React.Fragment>
       ) : (
         <React.Fragment>

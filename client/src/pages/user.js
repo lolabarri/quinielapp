@@ -2,7 +2,6 @@ import React from "react";
 import { UserCard } from "../components/UserCard";
 import { AuthAPI } from '../lib/auth';
 import { PointsAPI } from '../lib/points';
-import { BetAPI } from '../lib/bet';
 import { logout } from '../lib/redux/actions';
 import { connect } from 'react-redux';
 import styled from "@emotion/styled";
@@ -17,7 +16,6 @@ const User = connect(state => ({user: state.user}))(({user,dispatch, history}) =
   return (
       <div>
         <UserCard name={user.name} points={user.points}/>
-        <ButtonStyle onClick={() => BetAPI.getBet()}>Get Bet</ButtonStyle>
         <ButtonStyle onClick={() => PointsAPI.updatePoints()}>Update points</ButtonStyle>
         <ButtonStyle onClick={() => AuthAPI.logout().then(() =>
           history.push("/")).then(() => {dispatch(logout())})}>Logout</ButtonStyle>

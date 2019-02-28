@@ -4,7 +4,7 @@ const User = require("../models/User");
 const Bet = require("../models/Bet");
 const Results = require("../models/Results");
 
-router.get("/matchday", next => {
+router.post("/points", next => {
   Results.findOne({}, {}, { sort: { updated_at: -1 } }, (error, results) => {
     if (error) {
       next(error);

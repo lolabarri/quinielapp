@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: "http://localhost:8000",
-  timeout: 1000,
   withCredentials: true
 });
 
@@ -15,7 +14,7 @@ export class PointsAPI {
 
   static updatePoints() {
     return instance
-      .post("/points/updatePoints")
+      .post("/points/points")
       .then(res => res.data)
       .catch(PointsAPI.errorHandler);
   }
