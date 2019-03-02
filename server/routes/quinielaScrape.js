@@ -92,9 +92,9 @@ router.get("/apuesta", (req, res) => {
       if (response.status === 200) {
         const html = response.data;
         const $ = cheerio.load(html);
-        let matchesList = [];
+        let matchesListEnt = [];
         $(".bg-name").each(function(i, element) {
-          matchesList[i] = {
+          matchesListEnt[i] = {
             match: $(this).text()
           };
         });
@@ -135,6 +135,7 @@ router.get("/apuesta", (req, res) => {
           { name: "bet16" }
         ];
 
+        let matchesList = matchesListEnt.slice(0, -2);
         let bets = [];
         let number = {};
         matchesList.map((e, i) => {

@@ -22,8 +22,7 @@ router.post("/points", next => {
           });
           let apuestasArr = [];
           bets.forEach(({ apuestas }) => {
-            let apuestasEnt = apuestas.slice(1, -1);
-            apuestasArr.push(apuestasEnt);
+            apuestasArr.push(apuestas);
           });
           let pointsArr = [];
           apuestasArr.forEach(e => {
