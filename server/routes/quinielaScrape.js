@@ -54,6 +54,7 @@ router.post("/results", (req, res, next) => {
   );
 });
 
+// Saca los resultados de los partidos de la quiniela pasada
 router.get("/quiniela", (req, res) => {
   axios.get("https://www.loteriasyapuestas.es/es/la-quiniela").then(
     response => {
@@ -86,6 +87,7 @@ router.get("/quiniela", (req, res) => {
   );
 });
 
+// Saca los partidos para poder hacer la quiniela, del 1 al 14
 router.get("/apuesta", (req, res) => {
   axios.get("https://www.mundodeportivo.com/servicios/quiniela").then(
     response => {
@@ -112,9 +114,9 @@ router.get("/apuesta", (req, res) => {
           { number: 11 },
           { number: 12 },
           { number: 13 },
-          { number: 14 },
-          { number: 15 },
-          { number: 16 }
+          { number: 14 }
+          // { number: 15 },
+          // { number: 16 }
         ];
         let namesList = [
           { name: "bet1" },
@@ -130,10 +132,42 @@ router.get("/apuesta", (req, res) => {
           { name: "bet11" },
           { name: "bet12" },
           { name: "bet13" },
-          { name: "bet14" },
-          { name: "bet15" },
-          { name: "bet16" }
+          { name: "bet14" }
+          // { name: "bet15" },
+          // { name: "bet16" }
         ];
+
+        let matchesList = matchesListEnt.slice(0, -2);
+        let bets = [];
+        let number = {};
+        matchesList.map((e, i) => {
+          number.match = e.match;
+          number.number = numbersList[i].number;
+          number.name = namesList[i].name;
+          bets.push({ ...number });
+        });
+        res.json({ bets: bets });
+      }
+    },
+    err => console.log(err)
+  );
+});
+
+// Saca el pleno al 15
+router.get("/pleno", (req, res) => {
+  axios.get("https://www.mundodeportivo.com/servicios/quiniela").then(
+    response => {
+      if (response.status === 200) {
+        const html = response.data;
+        const $ = cheerio.load(html);
+        let matchesListEnt = [];
+        $(".bg-name").each(function(i, element) {
+          matchesListEnt[i] = {
+            match: $(this).text()
+          };
+        });
+        let numbersList = [{ number: 15 }, { number: 16 }];
+        let namesList = [{ name: "bet15" }, { name: "bet16" }];
 
         let matchesList = matchesListEnt.slice(0, -2);
         let bets = [];

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import BetRow from "../components/BetRow";
+import FullTo15Row from "../components/FullTo15Row";
 import { BetAPI } from "../lib/bet";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -85,9 +86,10 @@ class _Bet extends Component {
               ))
             ) : (
               <tr>
-                <td>...</td>
+                <td className="donut"></td>
               </tr>
             )}
+            <FullTo15Row number="15" localTeam="REAL MADRID" visitorTeam="BARCELONA"></FullTo15Row>
           </tbody>
         </TableStyle>
         <br />
