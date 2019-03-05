@@ -16,7 +16,7 @@ const flash = require("connect-flash");
 
 mongoose
   .connect(
-    `${process.env.DBURL}`,
+    `${process.env.MONGODB_URI}`,
     { useNewUrlParser: true }
   )
   .then(x => {
@@ -92,9 +92,6 @@ app.use(
 app.use(flash());
 require("./passport")(app);
 
-const index = require("./routes/index");
-app.use("/", index);
-
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
@@ -109,5 +106,9 @@ app.use("/quinielaScrape", quinielaRoutes);
 
 const pointsRoutes = require("./routes/pointsLogic");
 app.use("/points", pointsRoutes);
+
+app.use('*', (req,res) => {
+  res.sendFile(path.join(__dirname,'public/index.html'));
+});
 
 module.exports = app;
