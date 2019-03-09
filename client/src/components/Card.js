@@ -8,7 +8,7 @@ margin: 2vh 5vw;
 border: 1px solid tomato;
 border-radius: 5px;
 padding: 1vh;
-float: left;
+display: inline-block;
 font-size: 1em;
 a {
   text-decoration: none;

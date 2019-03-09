@@ -5,6 +5,8 @@ const cheerio = require("cheerio");
 const Bet = require("../models/Bet");
 const Results = require("../models/Results");
 
+
+// Hace una apuesta
 router.post("/new", (req, res, next) => {
   axios
     .get("https://www.mundodeportivo.com/servicios/quiniela")
@@ -52,14 +54,16 @@ router.post("/new", (req, res, next) => {
     });
 });
 
-router.get("/userBet/:matchday/:user_id", (req, res, next) => {
-  Bet.findOne({ matchday: req.params.matchday, user: req.params.user_id })
-    .then(oneBet => {
-      res.json(oneBet);
-    })
-    .catch(err => {
-      res.json({ message: "Something went wrong" });
-    });
-});
+// Devuelve todas las apuestas de un usuario
+router.get("/userBets", (req, res, next) => {
+  Bet.find({user: req.user_id}, null, {sort: { updated_at: -1 }}, (err, bets) => {
+    if (err) {
+      console.log("error query");
+    } else {
+      res.json({bets: bets})
+    }
+  })
+})
+
 
 module.exports = router;

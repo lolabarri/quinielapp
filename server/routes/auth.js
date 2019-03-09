@@ -76,6 +76,8 @@ router.get("/logout", (req, res) => {
   res.json({ succes: "OK" });
 });
 
+
+// Buscar todos los usuarios para el ranking
 router.get("/allUsers", (req, res) => {
   User.find({}, null, {sort: '-points'}, (err, users) => {
     if (err) {

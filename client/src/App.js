@@ -19,15 +19,17 @@ class App extends Component {
       <div className="App">
         
         <Navbar />
+        <div style={{maxWidth:"90%", margin:"0 auto"}}>
           <Switch>
-          <Route exact path='/' component={Home}/>
-          <Route path='/bet' component={Bet}/>
-          <Route path='/matches' component={Matches}/>
-          <Route path='/ranking' component={Ranking}/>
-          <Route path='/user' component={User}/>
-          <Route path='/signup' component={Signup}/>
-          <Route path='/login' component={Login}/>
-        </Switch>
+            <Route exact path='/' component={Home}/>
+            <Route path='/bet' component={Bet}/>
+            <Route path='/matches' component={Matches}/>
+            <Route path='/ranking' component={Ranking}/>
+            <Route path='/user' component={User}/>
+            <Route path='/signup' component={Signup}/>
+            <Route path='/login' component={Login}/>
+          </Switch>
+        </div>
       </div>
     );
   }

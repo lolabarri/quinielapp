@@ -14,7 +14,7 @@ const FullTo15Row = (props) => {
     <RowStyle>
       <td>{props.number}</td>
       <td>{props.localTeam} - {props.visitorTeam}</td>
-      <td><input onChange={props.onChange} type="text" name={props.name} value="1"/></td>
+      <td><input onChange={props.onChange} type="text" name={props.name} value="" placeholder="0-M"/></td>
     </RowStyle>
   );
 };

@@ -21,8 +21,15 @@ export class BetAPI {
 
   static getBet() {
     return instance
-      .get("/userBet")
+      .get("/bet/userBet")
       .then(res => res.data.bet)
+      .catch(BetAPI.errorHandler);
+  }
+
+  static getUserBets() {
+    return instance
+      .get("/bet/userBets")
+      .then(res => res.data)
       .catch(BetAPI.errorHandler);
   }
 }

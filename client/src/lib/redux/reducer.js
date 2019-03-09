@@ -1,20 +1,20 @@
 const initialStore = {
   user: {},
-  matchday: {}
+  messages: []
 };
 
 export const rootReducer = (store = initialStore, action) => {
   switch (action.type) {
-    // case "INCREMENT_MATCHDAY":
-    //   store = {
-    //     ...store,
-    //     matchday: store.matchday + 1
-    //   };
-    //   break;
-    case "MATCHDAY":
+    case "ADD_MESSAGE":
       store = {
         ...store,
-        matchday: action.matchday
+        messages: [action.message]
+      };
+      break;
+    case "DELETE_ALL_MESSAGES":
+      store = {
+        ...store,
+        messages: []
       };
       break;
     case "LOGIN":

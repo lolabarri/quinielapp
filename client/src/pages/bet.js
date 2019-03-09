@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import BetRow from "../components/BetRow";
-import FullTo15Row from "../components/FullTo15Row";
+// import FullTo15Row from "../components/FullTo15Row";
 import { BetAPI } from "../lib/bet";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { errorMessageAction } from "../lib/redux/actions";
+import { errorMessageAction, clearMessages } from "../lib/redux/actions";
 import styled from "@emotion/styled";
 import { getQuinielaBet } from "../lib/quinielaScrape";
 
@@ -44,11 +44,17 @@ class _Bet extends Component {
 
   handleBetting() {
     const { history, dispatch } = this.props;
-    BetAPI.bet(this.state.allTheBets)
-      .then(() => history.push("/"))
-      .catch(() => {
-        dispatch(errorMessageAction("Bet was not done"));
-      });
+    if (this.state.allTheBets.length === 14) {
+      BetAPI.bet(this.state.allTheBets)
+        .then(() => {
+          dispatch(clearMessages());
+          history.push("/")})
+        .catch(() => {
+          dispatch(errorMessageAction("Bet was not done"));
+        });
+    } else {
+      dispatch(errorMessageAction("You must fill in all the bets"));
+    }
   }
 
   handleChange(value, index) {
@@ -58,8 +64,7 @@ class _Bet extends Component {
       value
     };
     apuestas.push(obj);
-    this.setState({ allTheBets: apuestas }
-    );
+    this.setState({ allTheBets: apuestas });
   }
 
   render() {
@@ -86,17 +91,38 @@ class _Bet extends Component {
               ))
             ) : (
               <tr>
-                <td className="donut"></td>
+                <td className="donut" />
               </tr>
             )}
-            <FullTo15Row number="15" localTeam="REAL MADRID" visitorTeam="BARCELONA"></FullTo15Row>
           </tbody>
         </TableStyle>
         <br />
         <ButtonStyle onClick={() => this.handleBetting()}>Submit</ButtonStyle>
+        <br />
+        <h3>{this.props.messages}</h3>
+        {/* <TableStyle>
+        <thead>
+            <tr>
+              <th>NUM</th>
+              <th>MATCH</th>
+              <th>RESULT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <FullTo15Row
+              number="15"
+              localTeam="R. MADRID"
+              visitorTeam="BARCELONA"
+            />
+          </tbody>
+        </TableStyle> */}
       </React.Fragment>
     );
   }
 }
 
-export const Bet = connect()(withRouter(_Bet));
+const mapStateToProps = (state) => {
+  return {messages: state.messages}
+}
+
+export const Bet = connect(mapStateToProps)(withRouter(_Bet));

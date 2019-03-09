@@ -169,7 +169,8 @@ router.get("/pleno", (req, res) => {
         let numbersList = [{ number: 15 }, { number: 16 }];
         let namesList = [{ name: "bet15" }, { name: "bet16" }];
 
-        let matchesList = matchesListEnt.slice(0, -2);
+        let matchesList = matchesListEnt.splice(14, 2);
+        console.log(matchesList);
         let bets = [];
         let number = {};
         matchesList.map((e, i) => {

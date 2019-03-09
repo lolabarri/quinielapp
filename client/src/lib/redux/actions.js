@@ -1,10 +1,3 @@
-export const matchday = matchday => {
-  return {
-    type: "MATCHDAY",
-    matchday
-  };
-};
-
 export const login = user => {
   return {
     type: "LOGIN",
